@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+select{
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+}
+input {
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+}
+
 .primer-dia {
   background: rgb(255, 0, 0);
   background: linear-gradient(
