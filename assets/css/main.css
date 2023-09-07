@@ -2,17 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-input {
-  border: solid;
-  border-color: lightgray;
-  border-radius: 0.5rem;
-  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-}
 
-select {
-  border: solid;
-  border-color: lightgray;
-  border-radius: 0.5rem;
+select{
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+}
+input {
   box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
 }
 
@@ -37,6 +32,18 @@ select {
     rgba(255, 255, 255, 0) 100%
   );
 }
+
+.dia-compartido {
+  background: rgb(255, 40, 40);
+  background: linear-gradient(
+    140deg,
+    rgba(255, 40, 40, 1) 40%,
+    rgba(255, 255, 255, 1) 48%,
+    rgba(255, 255, 255, 1) 52%,
+    rgba(255, 0, 0, 1) 60%
+  );
+}
+
 
 .dia-compartido {
   background: rgb(255, 40, 40);
