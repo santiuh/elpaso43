@@ -29,3 +29,5 @@ Route::delete('/reservas/{id}','App\Http\Controllers\ReservasController@destroy'
 Route::get('/habitaciones','App\Http\Controllers\HabitacionesController@index');
 
 Route::post('/reservas/buscarPorNombre','App\Http\Controllers\ReservasController@buscarPorNombre');
+
+Route::post('/login','App\Http\Controllers\UsersController@index');

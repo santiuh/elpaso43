@@ -21,18 +21,18 @@ return new class extends Migration
             $table->foreign('habitacion_id')->references('id')->on('habitaciones');
             $table->date('desde');
             $table->date('hasta');
-            $table->unsignedBigInteger('noches');
-            $table->unsignedBigInteger('precio_noche');
-            $table->unsignedBigInteger('seña');
-            $table->unsignedBigInteger('seña_cuenta');
+            $table->unsignedBigInteger('noches')->nullable();
+            $table->unsignedBigInteger('precio_noche')->nullable();
+            $table->unsignedBigInteger('seña')->nullable();
+            $table->unsignedBigInteger('seña_cuenta')->nullable();
             $table->foreign('seña_cuenta')->references('id')->on('cuentas');
-            $table->unsignedBigInteger('pago_debe');
-            $table->date('pago_cancelado_fecha');
-            $table->unsignedBigInteger('pago_cancelado_cuenta');
+            $table->unsignedBigInteger('pago_debe')->nullable();
+            $table->date('pago_cancelado_fecha')->nullable();
+            $table->unsignedBigInteger('pago_cancelado_cuenta')->nullable();
             $table->foreign('pago_cancelado_cuenta')->references('id')->on('cuentas');
-            $table->string('pasajero');
-            $table->string('pasajero_contacto');
-            $table->string('nota');
+            $table->string('pasajero')->nullable();
+            $table->string('pasajero_contacto')->nullable();
+            $table->string('nota')->nullable();
             
 
             $table->timestamps();
