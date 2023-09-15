@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('habitacion_id')->references('id')->on('habitaciones');
             $table->date('desde');
             $table->date('hasta');
+            $table->unsignedBigInteger('personas')->nullable();
             $table->unsignedBigInteger('noches')->nullable();
             $table->unsignedBigInteger('precio_noche')->nullable();
             $table->unsignedBigInteger('seña')->nullable();

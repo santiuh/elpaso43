@@ -26,6 +26,11 @@ class CuentasSeeder extends Seeder
             'nombre' => 'Mercado Pago',
             'balance' => 0,
         ]);
+
+        Cuenta::create([
+            'nombre' => 'Adrián',
+            'balance' => 0,
+        ]);
         
     }
 }

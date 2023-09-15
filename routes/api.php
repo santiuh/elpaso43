@@ -19,29 +19,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::post('/reservas','App\Http\Controllers\ReservasController@store');
-
-Route::put('/reservas','App\Http\Controllers\ReservasController@update');
-
-Route::delete('/reservas/{id}','App\Http\Controllers\ReservasController@destroy');
-
-
-Route::post('/reservas/buscarPorNombre','App\Http\Controllers\ReservasController@buscarPorNombre');
-
-// viejo login
-Route::post('/login','App\Http\Controllers\UsersController@index');
-
-// Nuevos API
+// API LOGIN
 Route::post('register', [AuthController::class, 'register']);
 
 Route::post('login', [AuthController::class, 'login']);
 
-// Ruta Protejida
+// PROTEJIDO ACCIONES
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('/habitaciones','App\Http\Controllers\HabitacionesController@index');
     Route::get('/reservas','App\Http\Controllers\ReservasController@index');
+    Route::get('auth','App\Http\Controllers\ReservasController@auth');
+    Route::post('/reservas','App\Http\Controllers\ReservasController@store');
+    Route::put('/reservas','App\Http\Controllers\ReservasController@update');
+    Route::delete('/reservas/{id}','App\Http\Controllers\ReservasController@destroy');
+    Route::post('/reservas/buscarPorNombre','App\Http\Controllers\ReservasController@buscarPorNombre');
+    Route::get('/cuentas','App\Http\Controllers\ReservasController@getCuentas');
 
 
 

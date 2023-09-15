@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reserva;
 use App\Models\Habitacione;
+use App\Models\Cuenta;
 
 class ReservasController extends Controller
 {
@@ -19,6 +20,12 @@ class ReservasController extends Controller
         return $reservas;
     }
 
+    public function getCuentas()
+    {
+        $cuentas = Cuenta::all();
+        return $cuentas;
+    }
+
     public function buscarPorNombre(request $request)
     {
         $data = $request->all();
@@ -26,6 +33,12 @@ class ReservasController extends Controller
         $reservas = Reserva::where('pasajero','LIKE','%'.$data['pasajero'].'%')->get();
         return response()->json(['resultados' => $reservas], 400);
 
+    }
+
+    public function auth()
+    {
+        return response()->json(['Estado' => 'Autorizado'], 300);
+        ;
     }
 
     /**
@@ -80,6 +93,7 @@ class ReservasController extends Controller
             $reserva->pasajero = $request->pasajero;
             $reserva->pasajero_contacto = $request->pasajero_contacto;
             $reserva->nota = $request->nota;
+            $reserva->personas = $request->personas;
             $reserva-> save();
 
             return response()->json(['Agregado exitosamente.'], 200);
@@ -135,6 +149,8 @@ class ReservasController extends Controller
         $reserva->pasajero = $request->pasajero;
         $reserva->pasajero_contacto = $request->pasajero_contacto;
         $reserva->nota = $request->nota;
+        $reserva->personas = $request->personas;
+
         $reserva-> save();
         return 'OK';
     }
