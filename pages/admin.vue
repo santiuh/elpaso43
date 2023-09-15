@@ -3,6 +3,10 @@ import { ref, computed } from "vue";
 import { useReservas } from "@/composables/reservas";
 import { deleteReservas, addReserva, updateReserva } from "@/services/base";
 
+definePageMeta({
+  middleware: "auth",
+});
+
 const {
   useGetReservas,
   reservas,
@@ -10,17 +14,59 @@ const {
   habitaciones,
   useGetReservasPorNombre,
   resultados,
+  useGetCuentas,
+  cuentas,
 } = useReservas();
 
 onBeforeMount(() => {
   useGetReservas();
   useGetHabitaciones();
+  useGetCuentas();
 });
 
 // CALCULAR DIAS EN EL MES
 function daysInMonth(month, year) {
   return new Date(year, month, 0).getDate();
 }
+const dias = computed(() => {
+  return daysInMonth(tablames.value, tablaaño.value);
+});
+const hotel_id = ref(1);
+const busqueda = ref(null);
+const tablames = ref(8);
+const tablaaño = ref(2023);
+
+const inpPasajero = ref(null);
+const inpContacto = ref(null);
+const inpNota = ref(null);
+const inpDesde = ref(null);
+const inpHasta = ref(null);
+const inpNoches = ref(null);
+const inpPrecio = ref(null);
+const inpSeña = ref(null);
+const inpSeñaCuenta = ref(null);
+const inpCancel = ref(null);
+const inpCancelCuenta = ref(null);
+const inpPagoDebe = ref(null);
+const inpHabitacion_id = ref(null);
+const inpReservaId = ref(null);
+const inpPersonas = ref(null);
+
+const toastTexto = ref("");
+const toastEstado = ref(false);
+const toastClass = ref("");
+
+const update = (texto) => {
+  toastTexto.value = texto;
+  toastClass.value = "scale-in-center";
+  toastEstado.value = true;
+  setTimeout(function () {
+    toastClass.value = "scale-out-center";
+  }, 3000);
+  setTimeout(function () {
+    toastEstado.value = false;
+  }, 4000);
+};
 
 // PINTAR RESERVA
 function getClass(dia, habitacion) {
@@ -82,67 +128,11 @@ function getReservaTabla(dia, habitacion) {
   inpSeñaCuenta.value = reserva ? reserva.seña_cuenta : null;
   inpCancel.value = reserva ? reserva.pago_cancelado_fecha : null;
   inpCancelCuenta.value = reserva ? reserva.pago_cancelado_cuenta : null;
-  // CODIGO NUEVO
   inpReservaId.value = reserva ? reserva.id : null;
   inpHabitacion_id.value = reserva ? reserva.habitacion_id : null;
   inpPersonas.value = reserva ? reserva.personas : null;
+  inpPagoDebe.value = reserva ? reserva.pago_debe : null;
 }
-
-const habitacioness = 12;
-const tablames = ref(8);
-const tablaaño = ref(2023);
-const dias = computed(() => {
-  return daysInMonth(tablames.value, tablaaño.value);
-});
-const diasA = daysInMonth(tablames.value, tablaaño.value);
-
-const inpPasajero = ref(null);
-const inpContacto = ref(null);
-const inpNota = ref(null);
-
-const inpDesde = ref(null);
-const inpHasta = ref(null);
-const inpNoches = ref(null);
-const inpPrecio = ref(null);
-const inpSeña = ref(null);
-const inpSeñaCuenta = ref(null);
-const inpCancel = ref(null);
-const inpCancelCuenta = ref(null);
-
-// SCRIPT NUEVO 6 DE SEPTIEMBRE
-const inpHabitacion_id = ref(null);
-const inpReservaId = ref(null);
-const inpPersonas = ref(null);
-
-const hotel_id = ref(1);
-
-const busqueda = ref(null);
-
-const useDeleteReservas = (id) => {
-  deleteReservas(id).then((resp) => {
-    if (resp.status === 200) {
-      useGetReservas();
-      console.log(resp);
-      console.log(resp.text);
-      console.log("okis");
-    }
-  });
-};
-
-const update = (texto) => {
-  toastTexto.value = texto;
-  toastClass.value = "scale-in-center";
-  toastEstado.value = true;
-  setTimeout(function () {
-    toastClass.value = "scale-out-center";
-  }, 3000);
-  setTimeout(function () {
-    toastEstado.value = false;
-  }, 4000);
-};
-const toastTexto = ref("");
-const toastEstado = ref(false);
-const toastClass = ref("");
 
 const useAddReserva = () => {
   var reserva = {
@@ -151,10 +141,11 @@ const useAddReserva = () => {
     desde: inpDesde.value,
     hasta: inpHasta.value,
     noches: inpNoches.value,
+    personas: inpPersonas.value,
     precio_noche: inpPrecio.value,
     seña: inpSeña.value,
     seña_cuenta: inpSeñaCuenta.value,
-    pago_debe: 99999,
+    pago_debe: inpPagoDebe.value,
     pago_cancelado_fecha: inpCancel.value,
     pago_cancelado_cuenta: inpCancelCuenta.value,
     pasajero: inpPasajero.value,
@@ -172,10 +163,11 @@ const useUpdateReserva = () => {
     desde: inpDesde.value,
     hasta: inpHasta.value,
     noches: inpNoches.value,
+    personas: inpPersonas.value,
     precio_noche: inpPrecio.value,
     seña: inpSeña.value,
     seña_cuenta: inpSeñaCuenta.value,
-    pago_debe: 99999,
+    pago_debe: inpPagoDebe.value,
     pago_cancelado_fecha: inpCancel.value,
     pago_cancelado_cuenta: inpCancelCuenta.value,
     pasajero: inpPasajero.value,
@@ -183,6 +175,17 @@ const useUpdateReserva = () => {
     nota: inpNota.value,
   };
   updateReserva(reserva).then(useGetReservas());
+};
+
+const useDeleteReservas = (id) => {
+  deleteReservas(id).then((resp) => {
+    if (resp.status === 200) {
+      useGetReservas();
+      window.alert("Borrado con éxito");
+    } else {
+      window.alert("Error al intentar borrar.");
+    }
+  });
 };
 </script>
 
@@ -352,7 +355,7 @@ const useUpdateReserva = () => {
                   type="text"
                   name=""
                   id=""
-                  v-model="inpPrecio"
+                  v-model="inpPersonas"
                 />
               </div>
             </div>
@@ -433,8 +436,9 @@ const useUpdateReserva = () => {
                   id=""
                   v-model="inpSeñaCuenta"
                 >
-                  <option value="1">AMSI</option>
-                  <option value="2">Mercado Pago</option>
+                  <option v-for="cuenta in cuentas" :value="cuenta.id">
+                    {{ cuenta.nombre }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -445,7 +449,7 @@ const useUpdateReserva = () => {
                 type="text"
                 name=""
                 id=""
-                v-model="inpNoches"
+                v-model="inpPagoDebe"
               />
             </div>
 
@@ -468,8 +472,9 @@ const useUpdateReserva = () => {
                   id=""
                   v-model="inpCancelCuenta"
                 >
-                  <option value="1">AMSI</option>
-                  <option value="2">Mercado Pago</option>
+                  <option v-for="cuenta in cuentas" :value="cuenta.id">
+                    {{ cuenta.nombre }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -511,7 +516,7 @@ const useUpdateReserva = () => {
               ></Boton>
               <Boton
                 texto="Agregar"
-                class="!bg-green-600 !px-4 !py-1"
+                class="bg-green-600 !px-4 !py-1"
                 @click="useAddReserva()"
                 :disabled="
                   inpHabitacion_id === null ||
@@ -547,6 +552,7 @@ const useUpdateReserva = () => {
             v-for="resultado in resultados"
             class="border rounded-md max-w-max p-2 shadow-md hover:bg-gray-100"
             @click="
+              hotel_id = resultado.hotel_id;
               inpPasajero = resultado.pasajero;
               inpHabitacion_id = resultado.habitacion_id;
               inpPersonas = resultado.personas;
@@ -560,6 +566,7 @@ const useUpdateReserva = () => {
               inpCancel = resultado.pago_cancelado_fecha;
               inpCancelCuenta = resultado.pago_cancelado_cuenta;
               inpNota = resultado.nota;
+              inpPagoDebe = resultado.pago_debe;
             "
           >
             <div class="flex flex-col">

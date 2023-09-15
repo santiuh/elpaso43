@@ -7,7 +7,7 @@ export const getReservas = () => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
-  }).then((res) => res.json());
+  });
 };
 
 export const addReserva = (data) => {
@@ -18,7 +18,13 @@ export const addReserva = (data) => {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.status === 200) {
+      window.alert("Agregado con éxito");
+    } else {
+      res.json().then((data) => window.alert(data.error));
+    }
+  });
 };
 
 export const updateReserva = (data) => {
@@ -29,7 +35,13 @@ export const updateReserva = (data) => {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
     body: JSON.stringify(data),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.status === 200) {
+      window.alert("Actualiado con éxito.");
+    } else {
+      res.json().then((data) => window.alert(data.error));
+    }
+  });
 };
 
 export const deleteReservas = (id) => {
@@ -39,7 +51,7 @@ export const deleteReservas = (id) => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
-  }).then((res) => res.json());
+  });
 };
 
 export const getHabitaciones = () => {
@@ -75,6 +87,16 @@ export const logIn = (log) => {
 
 export const logOut = () => {
   return fetch(prefix + "logout", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+};
+
+export const getCuentas = () => {
+  return fetch(prefix + "cuentas", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

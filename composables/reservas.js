@@ -1,19 +1,28 @@
 import { ref } from "vue";
+import { useRouter } from "nuxt/app";
 import {
   getReservas,
   getHabitaciones,
   getReservasPorNombre,
   logIn,
   logOut,
+  getCuentas,
 } from "@/services/base";
 
 const reservas = ref([]);
 const habitaciones = ref([]);
 const resultados = ref([]);
+const cuentas = ref();
 
 export const useReservas = () => {
+  const router = useRouter();
+
   const useGetReservas = () => {
-    getReservas().then((data) => (reservas.value = data));
+    getReservas().then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => (reservas.value = data));
+      }
+    });
   };
 
   const useGetHabitaciones = () => {
@@ -32,7 +41,10 @@ export const useReservas = () => {
         res.json().then((data) => {
           localStorage.setItem("token", data.accessToken);
           localStorage.setItem("nombre", data.user.name);
+          router.push({ path: "/admin" });
         });
+      } else {
+        window.alert("Usuario o contraseña erroneos.");
       }
     });
   };
@@ -41,6 +53,15 @@ export const useReservas = () => {
     logOut(log).then((res) => {
       if (res.status === 200) {
         localStorage.clear();
+        router.push({ path: "/login" });
+      }
+    });
+  };
+
+  const useGetCuentas = () => {
+    getCuentas().then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => (cuentas.value = data));
       }
     });
   };
@@ -54,5 +75,7 @@ export const useReservas = () => {
     resultados,
     useLogin,
     useLogOut,
+    useGetCuentas,
+    cuentas,
   };
 };

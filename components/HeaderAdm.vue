@@ -1,6 +1,8 @@
 <template>
   <div class="w-screen border shadow-xl flex justify-between p-2">
-    <div class="font-monse text-xl">{{ nombre }}</div>
+    <div class="font-monse text-xl">
+      {{ nombre ? nombre : "Sesión no iniciada" }}
+    </div>
     <Boton
       texto="Cerrar sesión"
       class="!py-1 !px-1 !text-base"
@@ -14,8 +16,4 @@ const { useLogOut } = useReservas();
 const nombre = computed(() => {
   return localStorage.getItem("nombre");
 });
-
-const cerrarSesion = () => {
-  useLogOut.then();
-};
 </script>

@@ -3,6 +3,9 @@ import { useReservas } from "@/composables/reservas";
 const { useLogin } = useReservas();
 const inpEmail = ref("");
 const inpPassword = ref("");
+definePageMeta({
+  middleware: "auth",
+});
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const inpPassword = ref("");
       <div class="flex flex-col">
         <div>Contraseña</div>
         <input
-          type="text"
+          type="password"
           class="border rounded-md text-center"
           v-model="inpPassword"
         />
@@ -32,6 +35,7 @@ const inpPassword = ref("");
       <Boton
         texto="Iniciar Sesión"
         class="!py-3"
+        :disabled="inpEmail === '' || inpPassword.length < 6"
         @click="useLogin({ email: inpEmail, password: inpPassword })"
       ></Boton>
     </div>
