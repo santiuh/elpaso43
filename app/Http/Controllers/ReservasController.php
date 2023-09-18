@@ -20,6 +20,12 @@ class ReservasController extends Controller
         return $reservas;
     }
 
+    public function getReservasPub()
+    {
+        $reservas = Reserva::select('hotel_id', 'habitacion_id', 'desde', 'hasta')->get();
+        return $reservas;
+    }
+
     public function getCuentas()
     {
         $cuentas = Cuenta::all();
@@ -134,6 +140,7 @@ class ReservasController extends Controller
      */
     public function update(Request $request)
     {
+        try{
         $reserva = Reserva::findOrFail($request->id);
         $reserva->hotel_id = $request->hotel_id;
         $reserva->habitacion_id = $request->habitacion_id;
@@ -153,6 +160,11 @@ class ReservasController extends Controller
 
         $reserva-> save();
         return 'OK';
+        } 
+            catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                return response()->json(['error' => 'No existe la reserva.'], 400);
+                
+            }
     }
 
     /**

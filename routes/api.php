@@ -19,15 +19,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// API CLIENTES
+Route::get('/getReservasPub','App\Http\Controllers\ReservasController@getReservasPub');
+
 // API LOGIN
 Route::post('register', [AuthController::class, 'register']);
-
 Route::post('login', [AuthController::class, 'login']);
+Route::get('/habitaciones','App\Http\Controllers\HabitacionesController@index');
+
 
 // PROTEJIDO ACCIONES
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('logout', [AuthController::class, 'logout']);
-    Route::get('/habitaciones','App\Http\Controllers\HabitacionesController@index');
     Route::get('/reservas','App\Http\Controllers\ReservasController@index');
     Route::get('auth','App\Http\Controllers\ReservasController@auth');
     Route::post('/reservas','App\Http\Controllers\ReservasController@store');
