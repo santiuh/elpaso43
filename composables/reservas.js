@@ -1,26 +1,31 @@
 import { ref } from "vue";
-import { useRouter } from "nuxt/app";
 import {
   getReservas,
+  getReservasPub,
   getHabitaciones,
   getReservasPorNombre,
-  logIn,
-  logOut,
   getCuentas,
 } from "@/services/base";
 
-const reservas = ref([]);
-const habitaciones = ref([]);
-const resultados = ref([]);
-const cuentas = ref();
+const reservas = ref(null);
+const reservasPub = ref(null);
+const habitaciones = ref(null);
+const resultados = ref(null);
+const cuentas = ref(null);
 
 export const useReservas = () => {
-  const router = useRouter();
-
   const useGetReservas = () => {
     getReservas().then((res) => {
       if (res.status === 200) {
         res.json().then((data) => (reservas.value = data));
+      }
+    });
+  };
+
+  const useGetReservasPub = () => {
+    getReservasPub().then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => (reservasPub.value = data));
       }
     });
   };
@@ -34,28 +39,6 @@ export const useReservas = () => {
     getReservasPorNombre(busqueda).then(
       (data) => (resultados.value = data.resultados)
     );
-  };
-  const useLogin = (log) => {
-    logIn(log).then((res) => {
-      if (res.status === 200) {
-        res.json().then((data) => {
-          localStorage.setItem("token", data.accessToken);
-          localStorage.setItem("nombre", data.user.name);
-          router.push({ path: "/admin" });
-        });
-      } else {
-        window.alert("Usuario o contraseña erroneos.");
-      }
-    });
-  };
-
-  const useLogOut = (log) => {
-    logOut(log).then((res) => {
-      if (res.status === 200) {
-        localStorage.clear();
-        router.push({ path: "/login" });
-      }
-    });
   };
 
   const useGetCuentas = () => {
@@ -73,9 +56,9 @@ export const useReservas = () => {
     habitaciones,
     useGetReservasPorNombre,
     resultados,
-    useLogin,
-    useLogOut,
     useGetCuentas,
     cuentas,
+    useGetReservasPub,
+    reservasPub,
   };
 };

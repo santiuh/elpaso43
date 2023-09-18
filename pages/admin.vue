@@ -22,6 +22,7 @@ onBeforeMount(() => {
   useGetReservas();
   useGetHabitaciones();
   useGetCuentas();
+  mes();
 });
 
 // CALCULAR DIAS EN EL MES
@@ -31,10 +32,19 @@ function daysInMonth(month, year) {
 const dias = computed(() => {
   return daysInMonth(tablames.value, tablaaño.value);
 });
+
+const mes = () => {
+  let ahora = new Date();
+  let obtenerMes = ahora.getMonth();
+  let obtenerAño = ahora.getFullYear();
+  tablames.value = obtenerMes + 1;
+  tablaaño.value = obtenerAño;
+};
+
 const hotel_id = ref(1);
 const busqueda = ref(null);
-const tablames = ref(8);
-const tablaaño = ref(2023);
+const tablames = ref();
+const tablaaño = ref();
 
 const inpPasajero = ref(null);
 const inpContacto = ref(null);
@@ -51,22 +61,6 @@ const inpPagoDebe = ref(null);
 const inpHabitacion_id = ref(null);
 const inpReservaId = ref(null);
 const inpPersonas = ref(null);
-
-const toastTexto = ref("");
-const toastEstado = ref(false);
-const toastClass = ref("");
-
-const update = (texto) => {
-  toastTexto.value = texto;
-  toastClass.value = "scale-in-center";
-  toastEstado.value = true;
-  setTimeout(function () {
-    toastClass.value = "scale-out-center";
-  }, 3000);
-  setTimeout(function () {
-    toastEstado.value = false;
-  }, 4000);
-};
 
 // PINTAR RESERVA
 function getClass(dia, habitacion) {
@@ -90,12 +84,12 @@ function getClass(dia, habitacion) {
   } else if (reserva.length === 1) {
     if (reserva) {
       if (fechaDia.getTime() === new Date(reserva[0].desde).getTime()) {
-        return "primer-dia";
+        return "primer-dia ";
       }
       if (fechaDia.getTime() === new Date(reserva[0].hasta).getTime()) {
         return "ultimo-dia";
       }
-      return "bg-red-400 fade-in";
+      return "bg-red-400 dark:bg-red-900 fade-in";
     }
     return "";
   } else {
@@ -181,6 +175,8 @@ const useDeleteReservas = (id) => {
   deleteReservas(id).then((resp) => {
     if (resp.status === 200) {
       useGetReservas();
+      inpReservaId.value = null;
+
       window.alert("Borrado con éxito");
     } else {
       window.alert("Error al intentar borrar.");
@@ -190,11 +186,12 @@ const useDeleteReservas = (id) => {
 </script>
 
 <template>
-  <div class="dark:bg-black dark:text-gray-600">
+  <!-- SI RESERVAS ES NULL, NO MUESTRA LA PÁGINA -->
+  <div class="dark:bg-black dark:text-white">
     <HeaderAdm></HeaderAdm>
     <div class="flex flex-col items-center">
       <!-- TABLA -->
-      <div class="flex flex-col lg:flex-row my-10 shadow-xl">
+      <div class="flex flex-col lg:flex-row my-10 shadow-xl dark:bg-gray-950">
         <!-- izquierda -->
         <div class="flex flex-row">
           <!-- Cabañas y Nombre hotel -->
@@ -203,20 +200,25 @@ const useDeleteReservas = (id) => {
             <select
               name=""
               id=""
-              class="py-3 text-xl min-w-max"
+              class="lg:py-3 py-4 lg:text-xl lg:min-w-max text-xs text-center dark:bg-gray-950"
               v-model="hotel_id"
             >
-              <option :value="1">El Paso 43</option>
-              <option :value="2">El Paso 54</option>
+              <option :value="1">Paso 43</option>
+              <option :value="2">Paso 54</option>
             </select>
             <div class="p-2">
               <div v-for="habitacion in habitaciones">
                 <div
-                  class="border border-gray-3 00 text-center my-1"
-                  :class="habitacion.Habitación % 2 === 0 ? 'bg-gray-200' : ''"
+                  class="border border-gray-300 my-1 flex flex-row justify-center gap-1 lg:px-2 lg:text-base text-xs"
+                  :class="
+                    habitacion.Habitación % 2 === 0
+                      ? 'bg-gray-200 dark:bg-gray-800'
+                      : ''
+                  "
                   v-if="habitacion.hotel_id === hotel_id"
                 >
-                  Cabaña {{ habitacion.Habitación }}
+                  <div class="hidden lg:flex">Cabaña</div>
+                  <div>{{ habitacion.Habitación }}</div>
                 </div>
               </div>
             </div>
@@ -229,13 +231,13 @@ const useDeleteReservas = (id) => {
                 <div class="flex flex-row gap-1">
                   <input
                     v-model="tablaaño"
-                    class="border rounded-md w-14 text-center"
+                    class="border rounded-md w-14 text-center dark:bg-gray-800"
                     type="text"
                     name=""
                     id=""
                   />
                   <select
-                    class="border rounded-md text-center"
+                    class="border rounded-md text-center dark:bg-gray-800"
                     v-model="tablames"
                     name=""
                     id=""
@@ -272,21 +274,26 @@ const useDeleteReservas = (id) => {
                 ></Boton>
               </div>
             </div>
-            <div class="border max-w-fit p-2">
+            <div class="border dark:border-gray-400 max-w-fit p-2">
               <div
                 v-for="habitacion in habitaciones"
                 :key="`habitacion-${habitacion}`"
                 class="my-1"
-                :class="habitacion.Habitación % 2 === 0 ? 'bg-gray-200' : ' '"
+                :class="
+                  habitacion.Habitación % 2 === 0
+                    ? 'bg-gray-200 dark:bg-gray-800'
+                    : ' '
+                "
               >
                 <div
                   style="display: flex"
                   v-if="habitacion.hotel_id === hotel_id"
+                  class="gap-[2px] lg:gap-0"
                 >
                   <button
                     v-for="dia in dias"
                     :key="`${habitacion}-${dia}`"
-                    class="border border-gray-300 min-w-[2rem] text-center px-1"
+                    class="border border-gray-300 lg:min-w-[2rem] w-5 text-center lg:px-1 lg:text-base text-xs"
                     :class="getClass(dia, habitacion.id)"
                     @click="getReservaTabla(dia, habitacion.id)"
                   >
@@ -301,7 +308,9 @@ const useDeleteReservas = (id) => {
         <!-- derecha -->
       </div>
       <!-- INPUTS -->
-      <div class="border w-full items-center shadow2">
+      <div
+        class="border-y dark:border-gray-400 w-full items-center shadow2 dark:bg-gray-950"
+      >
         <div class="text-center font-monse text-xl py-6">RESERVA</div>
         <div class="flex flex-col w-full max-w-5xl mx-auto gap-3">
           <div class="grid grid-cols-4 gap-6">
@@ -309,7 +318,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Habitacion</div>
                 <select
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   name=""
                   id=""
                   v-model="inpHabitacion_id"
@@ -326,7 +335,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Hotel</div>
                 <select
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   name=""
                   id=""
                   v-model="hotel_id"
@@ -340,7 +349,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-4/5">
                 <div>Pasajero</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="text"
                   v-model="inpPasajero"
                   name=""
@@ -351,7 +360,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/5">
                 <div>Nº Pj.</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="text"
                   name=""
                   id=""
@@ -363,7 +372,7 @@ const useDeleteReservas = (id) => {
             <div class="flex flex-col">
               <div>Contacto</div>
               <input
-                class="border rounded-md"
+                class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                 type="text"
                 name=""
                 id=""
@@ -374,7 +383,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Desde</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="date"
                   name=""
                   id=""
@@ -384,7 +393,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Hasta</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="date"
                   name=""
                   id=""
@@ -398,7 +407,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-min">
                 <div>Noches</div>
                 <input
-                  class="border rounded-md w-full"
+                  class="border rounded-md w-full dark:border-gray-400 dark:bg-gray-800"
                   type="text"
                   name=""
                   id=""
@@ -408,7 +417,7 @@ const useDeleteReservas = (id) => {
               <div>
                 <div>Precio Por Noche</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="text"
                   name=""
                   id=""
@@ -421,7 +430,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-2/4">
                 <div>Seña</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="text"
                   name=""
                   id=""
@@ -431,7 +440,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-2/4">
                 <div>Cuenta</div>
                 <select
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   name=""
                   id=""
                   v-model="inpSeñaCuenta"
@@ -445,7 +454,7 @@ const useDeleteReservas = (id) => {
             <div class="flex flex-col">
               <div>Debe</div>
               <input
-                class="border rounded-md w-full"
+                class="border rounded-md w-full dark:border-gray-400 dark:bg-gray-800"
                 type="text"
                 name=""
                 id=""
@@ -457,7 +466,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Cancelación</div>
                 <input
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   type="date"
                   name=""
                   id=""
@@ -467,7 +476,7 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-col w-1/2">
                 <div>Cuenta</div>
                 <select
-                  class="border rounded-md"
+                  class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                   name=""
                   id=""
                   v-model="inpCancelCuenta"
@@ -483,7 +492,7 @@ const useDeleteReservas = (id) => {
             <div class="flex flex-col grow">
               <div>Nota</div>
               <input
-                class="border rounded-md"
+                class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
                 type="text"
                 name=""
                 v-model="inpNota"
@@ -532,10 +541,10 @@ const useDeleteReservas = (id) => {
       <!-- SEARCH -->
       <div class="flex flex-col items-center w-full h-min">
         <div
-          class="flex flex-row p-5 gap-3 border w-full justify-center shadow"
+          class="flex flex-row p-5 gap-3 border-b dark:border-gray-400 w-full justify-center shadow"
         >
           <input
-            class="border text-center rounded-md"
+            class="border dark:border-gray-400 text-center rounded-md dark:bg-gray-800"
             type="text"
             v-model="busqueda"
             placeholder="Buscar por Nombre"
@@ -550,8 +559,9 @@ const useDeleteReservas = (id) => {
         <div class="flex flex-wrap gap-3 p-5 w-full">
           <button
             v-for="resultado in resultados"
-            class="border rounded-md max-w-max p-2 shadow-md hover:bg-gray-100"
+            class="border dark:border-gray-400 rounded-md max-w-max p-2 shadow-md hover:bg-gray-100"
             @click="
+              inpReservaId = resultado.id;
               hotel_id = resultado.hotel_id;
               inpPasajero = resultado.pasajero;
               inpHabitacion_id = resultado.habitacion_id;

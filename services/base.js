@@ -1,7 +1,18 @@
-const prefix = "http://127.0.0.1:8000/api/";
+const prefix2 = "http://127.0.0.1:8000/api/";
+const prefix = "http://192.168.10.195:8000/api/";
 
 export const getReservas = () => {
   return fetch(prefix + "reservas", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+};
+
+export const getReservasPub = () => {
+  return fetch(prefix + "getReservasPub", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

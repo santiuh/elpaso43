@@ -16,12 +16,18 @@
         {{ textocard }}
       </div>
       <NuxtLink :to="link" class="lg:self-end"
-        ><Boton texto="VER MÁS"></Boton
+        ><Boton :texto="textoboton"></Boton
       ></NuxtLink>
     </div>
     <div class="lg:max-w-2xl"><img :src="imagen" alt="" /></div>
   </div>
 </template>
 <script setup>
-const props = defineProps(["textocard", "imagen", "titulocard", "link"]);
+const props = defineProps([
+  "textocard",
+  "imagen",
+  "titulocard",
+  "link",
+  "textoboton",
+]);
 </script>
