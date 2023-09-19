@@ -84,17 +84,17 @@ function getClass(dia, habitacion) {
   } else if (reserva.length === 1) {
     if (reserva) {
       if (fechaDia.getTime() === new Date(reserva[0].desde).getTime()) {
-        return "primer-dia ";
+        return "primer-dia-adm ";
       }
       if (fechaDia.getTime() === new Date(reserva[0].hasta).getTime()) {
-        return "ultimo-dia";
+        return "ultimo-dia-adm";
       }
-      return "bg-red-400 dark:bg-red-900 fade-in";
+      return "bg-red-700 fade-in";
     }
     return "";
   } else {
     if (reserva.length === 2) {
-      return "dia-compartido";
+      return "dia-compartido-adm";
     }
   }
 }
@@ -187,7 +187,7 @@ const useDeleteReservas = (id) => {
 
 <template>
   <!-- SI RESERVAS ES NULL, NO MUESTRA LA PÁGINA -->
-  <div class="dark:bg-black dark:text-white">
+  <div class="dark:bg-black dark:text-white" v-if="reservas">
     <HeaderAdm></HeaderAdm>
     <div class="flex flex-col items-center">
       <!-- TABLA -->
@@ -260,14 +260,18 @@ const useDeleteReservas = (id) => {
               <div class="flex flex-row gap-1">
                 <Boton
                   @click="
-                    tablames !== 1 ? tablames-- : (tablames = 12) && tablaaño--
+                    tablames !== 1 && tablames !== '1'
+                      ? tablames--
+                      : (tablames = 12) && tablaaño--
                   "
                   texto="<"
                   class="!py-0 px-1 font-bold"
                 ></Boton>
                 <Boton
                   @click="
-                    tablames !== 12 ? tablames++ : (tablames = 1) && tablaaño++
+                    tablames !== 12 && tablames !== '12'
+                      ? tablames++
+                      : (tablames = 1) && tablaaño++
                   "
                   texto=">"
                   class="!py-0 px-1 font-bold"
@@ -541,7 +545,7 @@ const useDeleteReservas = (id) => {
       <!-- SEARCH -->
       <div class="flex flex-col items-center w-full h-min">
         <div
-          class="flex flex-row p-5 gap-3 border-b dark:border-gray-400 w-full justify-center shadow"
+          class="flex flex-row p-5 gap-3 border-b dark:border-gray-400 w-full justify-center shadow dark:bg-gray-950"
         >
           <input
             class="border dark:border-gray-400 text-center rounded-md dark:bg-gray-800"

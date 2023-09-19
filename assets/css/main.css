@@ -23,6 +23,18 @@ input {
   -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
+.primer-dia {
+  background: rgb(248, 113, 113);
+  background: linear-gradient(
+    318deg,
+    rgba(248, 113, 113, 1) 0%,
+    rgba(248, 113, 113, 1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
 
 .ultimo-dia {
   background: rgb(248, 113, 113);
@@ -45,6 +57,45 @@ input {
     rgba(255, 255, 255, 1) 48%,
     rgba(255, 255, 255, 1) 52%,
     rgba(248, 113, 113, 1) 60%
+  );
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.primer-dia-adm {
+  background: rgb(185, 28, 28);
+  background: linear-gradient(
+    318deg,
+    rgba(185, 28, 28, 1) 0%,
+    rgba(185, 28, 28, 1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.ultimo-dia-adm {
+  background: rgb(185, 28, 28);
+  background: linear-gradient(
+    140deg,
+    rgba(185, 28, 28, 1) 0%,
+    rgba(185, 28, 28, 1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.dia-compartido-adm {
+  background: rgb(185, 28, 28);
+  background: linear-gradient(
+    140deg,
+    rgba(185, 28, 28, 1) 40%,
+    rgba(255, 255, 255, 1) 48%,
+    rgba(255, 255, 255, 1) 52%,
+    rgba(185, 28, 28, 1) 60%
   );
   -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;

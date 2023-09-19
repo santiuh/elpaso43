@@ -70,14 +70,18 @@
             <div class="flex flex-row gap-1">
               <Boton
                 @click="
-                  tablames !== 1 ? tablames-- : (tablames = 12) && tablaaño--
+                  tablames !== 1 && tablames !== '1'
+                    ? tablames--
+                    : (tablames = 12) && tablaaño--
                 "
                 texto="<"
                 class="!py-0 px-1 font-bold"
               ></Boton>
               <Boton
                 @click="
-                  tablames !== 12 ? tablames++ : (tablames = 1) && tablaaño++
+                  tablames !== 12 && tablames !== '12'
+                    ? tablames++
+                    : (tablames = 1) && tablaaño++
                 "
                 texto=">"
                 class="!py-0 px-1 font-bold"
@@ -95,14 +99,14 @@
                 style="display: flex"
                 v-if="habitacion.hotel_id === hotel_id"
               >
-                <button
+                <div
                   v-for="dia in dias"
                   :key="`${habitacion}-${dia}`"
                   class="border border-gray-300 lg:min-w-[2rem] w-[11px] text-center lg:px-1 lg:text-base text-[8px]"
                   :class="getClass(dia, habitacion.id)"
                 >
                   {{ dia }}
-                </button>
+                </div>
               </div>
             </div>
           </div>
