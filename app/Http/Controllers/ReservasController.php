@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Reserva;
 use App\Models\Habitacione;
 use App\Models\Cuenta;
-
+use Carbon\Carbon;
 class ReservasController extends Controller
 {
     /**
@@ -20,9 +20,22 @@ class ReservasController extends Controller
         return $reservas;
     }
 
+    // public function getReservasPub()
+    // {
+    //     $reservas = Reserva::select('hotel_id', 'habitacion_id', 'desde', 'hasta')->get();
+    //     return $reservas;
+    // }
+
     public function getReservasPub()
     {
-        $reservas = Reserva::select('hotel_id', 'habitacion_id', 'desde', 'hasta')->get();
+        // Obtén la fecha actual y resta un mes para obtener el primer día del mes anterior
+        $fechaMesAnterior = Carbon::now()->subMonth()->startOfMonth();
+    
+        // Filtra las reservas donde la fecha de inicio sea mayor o igual al primer día del mes anterior
+        $reservas = Reserva::select('hotel_id', 'habitacion_id', 'desde', 'hasta')
+            ->where('desde', '>=', $fechaMesAnterior)
+            ->get();
+    
         return $reservas;
     }
 
