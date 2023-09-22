@@ -1,4 +1,5 @@
 <template>
+  <Title>El Paso 43</Title>
   <HeaderA
     fondo="/images/portadatemp.jpeg"
     class="bg-[url('/images/portada4.jpeg')] lg:bg-[url('/images/portadatemp.jpeg')]"
@@ -9,7 +10,7 @@
   </div>
   <Cardindex
     titulocard="Hasta 6 personas."
-    textocard="Duplex con capacidad para 2, 4 o 6 personas, equipados con Smart TV, cocina, wi-fi, heladera microondas, vajilla, blancos (sabanas y toallas) y con dos balcones al mar."
+    textocard="Dúplex con capacidad para 2, 4 o 6 personas, equipados con Smart TV, cocina, Wi-Fi, heladera, microondas, vajilla, blancos (sabanas y toallas) y con dos balcones al mar."
     imagen="images/DormitorioIndex.jpeg"
     link="/cabanas"
     textoboton="VER CABAÑAS"

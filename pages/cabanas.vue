@@ -1,4 +1,6 @@
 <template>
+  <Title>El Paso 43 - Cabañas</Title>
+
   <HeaderA
     class="lg:bg-[url('/images/balconsat.jpeg')] bg-[url('/images/portada2.jpeg')]"
     modo="A"
@@ -6,9 +8,9 @@
   <div class="lg:mx-52">
     <div class="font-adobe text-4xl justify-center flex py-8">CABAÑAS</div>
     <p class="font-monse text-2xl text-center px-5 lg:px-0">
-      Duplex con capacidad para 2, 4 o 6 personas, equipados con Smart TV,
-      cocina, wi-fi, heladera microondas, vajilla, blancos (sabanas y toallas) y
-      con dos balcones al mar.
+      Dúplex con capacidad para 2, 4 o 6 personas, equipados con Smart TV,
+      cocina, Wi-Fi, heladera, microondas, vajilla, blancos (sabanas y toallas)
+      y con dos balcones al mar.
     </p>
   </div>
   <Foto class="B" foto="images/cama_dentro.jpeg" pie="CAMA DOBLE"></Foto>

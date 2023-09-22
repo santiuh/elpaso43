@@ -54,8 +54,8 @@ input {
   background: linear-gradient(
     140deg,
     rgba(248, 113, 113, 1) 40%,
-    rgba(255, 255, 255, 1) 48%,
-    rgba(255, 255, 255, 1) 52%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, 0) 52%,
     rgba(248, 113, 113, 1) 60%
   );
   -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -93,8 +93,8 @@ input {
   background: linear-gradient(
     140deg,
     rgba(185, 28, 28, 1) 40%,
-    rgba(255, 255, 255, 1) 48%,
-    rgba(255, 255, 255, 1) 52%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, 0) 52%,
     rgba(185, 28, 28, 1) 60%
   );
   -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;

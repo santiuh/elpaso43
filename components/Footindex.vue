@@ -6,9 +6,9 @@
       <div class="text-sm text-white text-center lg:text-start">
         <div>©2023 El Paso 43</div>
         <div class="lg:px-0 px-2">
-          Av. Costanera 4148, B7112 Costa Azul, Provincia de Buenos Aires
+          Av. Costanera 4148, B7112, Costa Azul, Provincia de Buenos Aires
         </div>
-        <div>(Tel) +54 9 341 383-2007 / +54 9 341 378-9757</div>
+        <div>(Tel.) +54 9 341 383-2007 / +54 9 341 378-9757</div>
       </div>
 
       <br />

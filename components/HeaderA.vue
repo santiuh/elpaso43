@@ -51,9 +51,11 @@
     >
       <div class="flex flex-col gap-1" v-if="modo === 'A'">
         <div class="text-white font-monse lg:text-5xl text-3xl">
-          BIENVENÍDO A
+          BIENVENIDO A
         </div>
-        <div class="text-white font-adobe lg:text-9xl text-6xl font-bold">
+        <div
+          class="text-white font-adobe lg:text-9xl text-[3.5rem] font-bold leading-[3.5rem] lg:leading-none"
+        >
           EL PASO 43
         </div>
         <div class="text-white font-adobe lg:text-7xl text-3xl font-bold">

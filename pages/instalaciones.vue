@@ -1,4 +1,5 @@
 <template>
+  <Title>El Paso 43 - Instalaciones</Title>
   <HeaderA
     class="lg:bg-[url('/images/portada2oscura.jpg')] bg-[url('/images/ventana.jpeg')]"
     modo="A"

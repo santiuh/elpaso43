@@ -186,6 +186,7 @@ const useDeleteReservas = (id) => {
 </script>
 
 <template>
+  <Title>Admin</Title>
   <!-- SI RESERVAS ES NULL, NO MUESTRA LA PÁGINA -->
   <div class="dark:bg-black dark:text-white" v-if="reservas">
     <HeaderAdm></HeaderAdm>
@@ -317,7 +318,7 @@ const useDeleteReservas = (id) => {
       >
         <div class="text-center font-monse text-xl py-6">RESERVA</div>
         <div class="flex flex-col w-full max-w-5xl mx-auto gap-3">
-          <div class="grid grid-cols-4 gap-6">
+          <div class="lg:grid lg:grid-cols-4 gap-6">
             <div class="flex flex-row gap-3">
               <div class="flex flex-col w-1/2">
                 <div>Habitacion</div>
@@ -362,10 +363,10 @@ const useDeleteReservas = (id) => {
               </div>
 
               <div class="flex flex-col w-1/5">
-                <div>Nº Pj.</div>
+                <div>PAX</div>
                 <input
                   class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
-                  type="text"
+                  type="number"
                   name=""
                   id=""
                   v-model="inpPersonas"
@@ -406,15 +407,13 @@ const useDeleteReservas = (id) => {
               </div>
             </div>
           </div>
-          <div class="grid grid-cols-4 gap-6">
+          <div class="lg:grid lg:grid-cols-4 gap-6">
             <div class="flex flex-row gap-2">
               <div class="flex flex-col w-min">
                 <div>Noches</div>
                 <input
                   class="border rounded-md w-full dark:border-gray-400 dark:bg-gray-800"
-                  type="text"
-                  name=""
-                  id=""
+                  type="number"
                   v-model="inpNoches"
                 />
               </div>
@@ -422,9 +421,7 @@ const useDeleteReservas = (id) => {
                 <div>Precio Por Noche</div>
                 <input
                   class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
-                  type="text"
-                  name=""
-                  id=""
+                  type="number"
                   v-model="inpPrecio"
                 />
               </div>
@@ -435,9 +432,7 @@ const useDeleteReservas = (id) => {
                 <div>Seña</div>
                 <input
                   class="border rounded-md dark:border-gray-400 dark:bg-gray-800"
-                  type="text"
-                  name=""
-                  id=""
+                  type="number"
                   v-model="inpSeña"
                 />
               </div>
@@ -459,7 +454,7 @@ const useDeleteReservas = (id) => {
               <div>Debe</div>
               <input
                 class="border rounded-md w-full dark:border-gray-400 dark:bg-gray-800"
-                type="text"
+                type="number"
                 name=""
                 id=""
                 v-model="inpPagoDebe"

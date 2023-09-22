@@ -25,13 +25,15 @@ const useLogin = (log) => {
 </script>
 
 <template>
+  <Title>LogIn</Title>
+
   <div
     class="h-screen w-screen flex justify-center items-center text-center font-monse dark:bg-black dark:text-white"
   >
     <div
       class="border dark:border-gray-400 rounded-md flex flex-col p-5 px-10 gap-5 items-center relative shadow-xl dark:bg-gray-950"
     >
-      <img src="images/logo.png" alt="" class="w-44 bottom-[244px] absolute" />
+      <img src="/images/logo.png" alt="" class="w-44 bottom-[244px] absolute" />
       <div class="flex flex-col">
         <div>Usuario</div>
         <input
@@ -50,7 +52,11 @@ const useLogin = (log) => {
       </div>
       <div class="flex flex-row items-center gap-2">
         <div>Mostrar contraseña</div>
-        <input type="checkbox" v-model="mostrarContraseña" />
+        <input
+          type="checkbox"
+          v-model="mostrarContraseña"
+          class="shadow-none"
+        />
       </div>
       <Boton
         texto="Iniciar Sesión"

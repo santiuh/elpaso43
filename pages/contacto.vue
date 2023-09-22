@@ -1,4 +1,5 @@
 <template>
+  <Title>El Paso 43 - Contacto</Title>
   <HeaderA modo="B"></HeaderA>
   <div class="py-10 flex flex-col">
     <div class="lg:px-52 text-center lg:text-start">
@@ -8,7 +9,7 @@
       </p>
     </div>
     <!-- TABLA -->
-    <div class="flex flex-col lg:flex-row my-10 justify-center">
+    <div class="flex flex-col my-10 justify-center gap-1" v-if="reservasPub">
       <!-- izquierda -->
       <div class="flex flex-row justify-center">
         <!-- Cabañas y Nombre hotel -->
@@ -112,12 +113,17 @@
           </div>
         </div>
       </div>
+      <div class="text-center flex flex-row self-center gap-1 text-gray-500">
+        * Se muestran en
+        <div class="text-red-400">rojo</div>
+        las fechas ocupadas.
+      </div>
     </div>
     <!-- contacto -->
     <div class="flex flex-col lg:flex-row my-10 gap-10 lg:px-52">
       <div class="flex flex-col font-monse font-bold">
         <div class="lg:text-start text-center text-xl">
-          Comunicate por Whatsapp
+          Comunicate por WhatsApp
           <div
             class="lg:pl-7 lg:py-3 py-3 flex lg:flex-row flex-col items-center gap-3 text-base"
           >
@@ -241,14 +247,14 @@
                     </g>
                   </g>
                 </svg>
-                elpaso43@gmail.com
+                alojamientoelpaso43@gmail.com
               </p>
             </button>
           </a>
         </div>
         <!-- INSTAGRAM -->
         <div class="text-center lg:text-start">
-          <p class="text-xl">Seguínos en Instagram</p>
+          <p class="text-xl">Seguinos en Instagram</p>
           <button class="lg:pl-7 lg:py-3 py-2">
             <a target="_blank" href="https://www.instagram.com/elpaso.43">
               <p
@@ -286,7 +292,7 @@
                     </g>
                   </g>
                 </svg>
-                @ElPaso43
+                @ElPaso.43
               </p>
             </a>
           </button>
