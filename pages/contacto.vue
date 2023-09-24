@@ -1,16 +1,129 @@
 <template>
+  <Title>El Paso 43 - Contacto</Title>
   <HeaderA modo="B"></HeaderA>
-  <div class="lg:px-52 py-10 flex flex-col">
-    <div class="text-center lg:text-start">
+  <div class="py-10 flex flex-col">
+    <div class="lg:px-52 text-center lg:text-start">
       <div class="font-adobe text-3xl lg:text-4xl">Reservá ahora.</div>
       <p class="font-monse text-2xl">
-        Contactanos y reservá ahora tu lugar en El Paso 43.
+        Consultá las fechas disponibles y contactanos para reservar tu lugar.
       </p>
     </div>
-    <div class="flex flex-col lg:flex-row my-10 gap-10">
+    <!-- TABLA -->
+    <div class="flex flex-col my-10 justify-center gap-1" v-if="reservasPub">
+      <!-- izquierda -->
+      <div class="flex flex-row justify-center">
+        <!-- Cabañas y Nombre hotel -->
+        <div class="lg:flex flex-col border">
+          <div
+            class="lg:py-[9px] py-4 lg:text-xl lg:min-w-max text-xs hidden lg:flex lg:justify-center"
+          >
+            El Paso 43
+          </div>
+
+          <div class="lg:p-[6px] pt-[53px] px-[2px]">
+            <div v-for="habitacion in habitaciones">
+              <div
+                class="border border-gray-300 my-1 flex flex-row justify-center gap-[2px] lg:gap-1 lg:px-2 lg:text-base text-[8px]"
+                :class="habitacion.Habitación % 2 === 0 ? 'bg-gray-200' : ''"
+                v-if="habitacion.hotel_id === hotel_id"
+              >
+                <div class="hidden lg:flex">Cabaña</div>
+                <div class="lg:hidden flex">Hab.</div>
+                <div>{{ habitacion.Habitación }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Izquierda - Select y Fechas -->
+        <div class="flex flex-col">
+          <div class="flex flex-row p-2 border justify-between">
+            <!-- Select -->
+            <div class="flex flex-row">
+              <div class="flex flex-row gap-1">
+                <input
+                  v-model="tablaaño"
+                  class="border rounded-md w-14 text-center"
+                  type="text"
+                  name=""
+                  id=""
+                />
+                <select
+                  class="border rounded-md text-center"
+                  v-model="tablames"
+                  name=""
+                  id=""
+                >
+                  <option value="1">Enero</option>
+                  <option value="2">Febrero</option>
+                  <option value="3">Marzo</option>
+                  <option value="4">Abril</option>
+                  <option value="5">Mayo</option>
+                  <option value="6">Junio</option>
+                  <option value="7">Julio</option>
+                  <option value="8">Agosto</option>
+                  <option value="9">Septiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex flex-row gap-1">
+              <Boton
+                @click="
+                  tablames !== 1 && tablames !== '1'
+                    ? tablames--
+                    : (tablames = 12) && tablaaño--
+                "
+                texto="<"
+                class="!py-0 px-1 font-bold"
+              ></Boton>
+              <Boton
+                @click="
+                  tablames !== 12 && tablames !== '12'
+                    ? tablames++
+                    : (tablames = 1) && tablaaño++
+                "
+                texto=">"
+                class="!py-0 px-1 font-bold"
+              ></Boton>
+            </div>
+          </div>
+          <div class="border max-w-fit lg:p-1 py-1 px-[2px]">
+            <div
+              v-for="habitacion in habitaciones"
+              :key="`habitacion-${habitacion}`"
+              class="my-1"
+              :class="habitacion.Habitación % 2 === 0 ? 'bg-gray-200' : ' '"
+            >
+              <div
+                style="display: flex"
+                v-if="habitacion.hotel_id === hotel_id"
+              >
+                <div
+                  v-for="dia in dias"
+                  :key="`${habitacion}-${dia}`"
+                  class="border border-gray-300 lg:min-w-[2rem] w-[11px] text-center lg:px-1 lg:text-base text-[8px]"
+                  :class="getClass(dia, habitacion.id)"
+                >
+                  {{ dia }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center flex flex-row self-center gap-1 text-gray-500">
+        * Se muestran en
+        <div class="text-red-400">rojo</div>
+        las fechas ocupadas.
+      </div>
+    </div>
+    <!-- contacto -->
+    <div class="flex flex-col lg:flex-row my-10 gap-10 lg:px-52">
       <div class="flex flex-col font-monse font-bold">
         <div class="lg:text-start text-center text-xl">
-          Comunicate por Whatsapp
+          Comunicate por WhatsApp
           <div
             class="lg:pl-7 lg:py-3 py-3 flex lg:flex-row flex-col items-center gap-3 text-base"
           >
@@ -99,59 +212,18 @@
         <!-- GMAIL -->
         <div class="text-center lg:text-start">
           <p class="text-xl">Mandanos un correo</p>
-          <button class="lg:pl-7 py-3">
-            <p
-              class="bg-mostaza text-white font-bold p-2 w-max flex flex-row items-center gap-2 rounded-md shadow-inner hover:brightness-90"
-            >
-              <svg
-                class="w-8"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                viewBox="0,0,256,256"
+          <a href="mailto:alojamientoelpaso43@gmail.com">
+            <button class="lg:pl-7 py-3">
+              <p
+                class="bg-mostaza text-white font-bold p-2 w-max flex flex-row items-center gap-2 rounded-md shadow-inner hover:brightness-90"
               >
-                <g
-                  fill="#ffffff"
-                  fill-rule="nonzero"
-                  stroke="none"
-                  stroke-width="1"
-                  stroke-linecap="butt"
-                  stroke-linejoin="miter"
-                  stroke-miterlimit="10"
-                  stroke-dasharray=""
-                  stroke-dashoffset="0"
-                  font-family="none"
-                  font-weight="none"
-                  font-size="none"
-                  text-anchor="none"
-                  style="mix-blend-mode: normal"
+                <svg
+                  class="w-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  viewBox="0,0,256,256"
                 >
-                  <g transform="scale(5.12,5.12)">
-                    <path
-                      d="M5.5,7c-2.46875,0 -4.48828,2.01563 -4.5,4.48438c0,0 0,0.00391 0,0.00781c0,0.00391 0,0.00391 0,0.00781v27c0,2.47266 2.02734,4.5 4.5,4.5h39c2.47266,0 4.5,-2.02734 4.5,-4.5v-27c0,-0.00391 0,-0.00391 0,-0.00781c0,-0.00391 0,-0.00781 0,-0.00781c-0.01172,-2.46875 -2.03125,-4.48437 -4.5,-4.48437zM8.10156,9h33.80078l-16.90234,11.78125zM4.77344,9.11719l20.22656,14.10156l20.23047,-14.10156c1.02344,0.30859 1.76172,1.23828 1.76953,2.37109c-0.00391,0.21094 -0.21875,0.63281 -0.53125,0.97266c-0.31641,0.34375 -0.625,0.55859 -0.625,0.55859l-0.00391,0.00781l-20.83984,14.75l-20.83984,-14.75l-0.00391,-0.00781c0,0 -0.30859,-0.21484 -0.625,-0.55859c-0.3125,-0.33984 -0.52734,-0.76172 -0.53125,-0.97266c0.00781,-1.13281 0.74609,-2.0625 1.77344,-2.37109zM3,14.65234l0.00781,0.00781l0.00781,0.00391v0.00391l2.98438,2.10938v24.22266h-0.5c-1.39062,0 -2.5,-1.10937 -2.5,-2.5zM47,14.65234v23.84766c0,1.39063 -1.10937,2.5 -2.5,2.5h-0.5v-24.22266l2.98438,-2.10937v-0.00391zM8,18.19141l17,12.03125l17,-12.03125v22.80859h-34z"
-                    ></path>
-                  </g>
-                </g>
-              </svg>
-              elpaso43@gmail.com
-            </p>
-          </button>
-        </div>
-        <!-- INSTAGRAM -->
-        <div class="text-center lg:text-start">
-          <p class="text-xl">Seguínos en Instagram</p>
-          <button class="lg:pl-7 lg:py-3 py-2">
-            <p
-              class="bg-mostaza lg:py-3 flex flex-row items-center gap-2 text-white font-bold rounded-md p-2 w-max hover:brightness-90"
-            >
-              <svg
-                class="w-8"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                viewBox="0,0,256,256"
-              >
-                <g transform="">
                   <g
                     fill="#ffffff"
                     fill-rule="nonzero"
@@ -163,21 +235,66 @@
                     stroke-dasharray=""
                     stroke-dashoffset="0"
                     font-family="none"
-                    font-weight="bold"
+                    font-weight="none"
                     font-size="none"
                     text-anchor="none"
                     style="mix-blend-mode: normal"
                   >
                     <g transform="scale(5.12,5.12)">
                       <path
-                        d="M16,3c-7.16752,0 -13,5.83248 -13,13v18c0,7.16752 5.83248,13 13,13h18c7.16752,0 13,-5.83248 13,-13v-18c0,-7.16752 -5.83248,-13 -13,-13zM16,5h18c6.08648,0 11,4.91352 11,11v18c0,6.08648 -4.91352,11 -11,11h-18c-6.08648,0 -11,-4.91352 -11,-11v-18c0,-6.08648 4.91352,-11 11,-11zM37,11c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM25,14c-6.06329,0 -11,4.93671 -11,11c0,6.06329 4.93671,11 11,11c6.06329,0 11,-4.93671 11,-11c0,-6.06329 -4.93671,-11 -11,-11zM25,16c4.98241,0 9,4.01759 9,9c0,4.98241 -4.01759,9 -9,9c-4.98241,0 -9,-4.01759 -9,-9c0,-4.98241 4.01759,-9 9,-9z"
+                        d="M5.5,7c-2.46875,0 -4.48828,2.01563 -4.5,4.48438c0,0 0,0.00391 0,0.00781c0,0.00391 0,0.00391 0,0.00781v27c0,2.47266 2.02734,4.5 4.5,4.5h39c2.47266,0 4.5,-2.02734 4.5,-4.5v-27c0,-0.00391 0,-0.00391 0,-0.00781c0,-0.00391 0,-0.00781 0,-0.00781c-0.01172,-2.46875 -2.03125,-4.48437 -4.5,-4.48437zM8.10156,9h33.80078l-16.90234,11.78125zM4.77344,9.11719l20.22656,14.10156l20.23047,-14.10156c1.02344,0.30859 1.76172,1.23828 1.76953,2.37109c-0.00391,0.21094 -0.21875,0.63281 -0.53125,0.97266c-0.31641,0.34375 -0.625,0.55859 -0.625,0.55859l-0.00391,0.00781l-20.83984,14.75l-20.83984,-14.75l-0.00391,-0.00781c0,0 -0.30859,-0.21484 -0.625,-0.55859c-0.3125,-0.33984 -0.52734,-0.76172 -0.53125,-0.97266c0.00781,-1.13281 0.74609,-2.0625 1.77344,-2.37109zM3,14.65234l0.00781,0.00781l0.00781,0.00391v0.00391l2.98438,2.10938v24.22266h-0.5c-1.39062,0 -2.5,-1.10937 -2.5,-2.5zM47,14.65234v23.84766c0,1.39063 -1.10937,2.5 -2.5,2.5h-0.5v-24.22266l2.98438,-2.10937v-0.00391zM8,18.19141l17,12.03125l17,-12.03125v22.80859h-34z"
                       ></path>
                     </g>
                   </g>
-                </g>
-              </svg>
-              @ElPaso43
-            </p>
+                </svg>
+                alojamientoelpaso43@gmail.com
+              </p>
+            </button>
+          </a>
+        </div>
+        <!-- INSTAGRAM -->
+        <div class="text-center lg:text-start">
+          <p class="text-xl">Seguinos en Instagram</p>
+          <button class="lg:pl-7 lg:py-3 py-2">
+            <a target="_blank" href="https://www.instagram.com/elpaso.43">
+              <p
+                class="bg-mostaza lg:py-3 flex flex-row items-center gap-2 text-white font-bold rounded-md p-2 w-max hover:brightness-90"
+              >
+                <svg
+                  class="w-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  viewBox="0,0,256,256"
+                >
+                  <g transform="">
+                    <g
+                      fill="#ffffff"
+                      fill-rule="nonzero"
+                      stroke="none"
+                      stroke-width="1"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-miterlimit="10"
+                      stroke-dasharray=""
+                      stroke-dashoffset="0"
+                      font-family="none"
+                      font-weight="bold"
+                      font-size="none"
+                      text-anchor="none"
+                      style="mix-blend-mode: normal"
+                    >
+                      <g transform="scale(5.12,5.12)">
+                        <path
+                          d="M16,3c-7.16752,0 -13,5.83248 -13,13v18c0,7.16752 5.83248,13 13,13h18c7.16752,0 13,-5.83248 13,-13v-18c0,-7.16752 -5.83248,-13 -13,-13zM16,5h18c6.08648,0 11,4.91352 11,11v18c0,6.08648 -4.91352,11 -11,11h-18c-6.08648,0 -11,-4.91352 -11,-11v-18c0,-6.08648 4.91352,-11 11,-11zM37,11c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM25,14c-6.06329,0 -11,4.93671 -11,11c0,6.06329 4.93671,11 11,11c6.06329,0 11,-4.93671 11,-11c0,-6.06329 -4.93671,-11 -11,-11zM25,16c4.98241,0 9,4.01759 9,9c0,4.98241 -4.01759,9 -9,9c-4.98241,0 -9,-4.01759 -9,-9c0,-4.98241 4.01759,-9 9,-9z"
+                        ></path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                @ElPaso.43
+              </p>
+            </a>
           </button>
         </div>
       </div>
@@ -261,3 +378,72 @@
 
   <Footindex></Footindex>
 </template>
+<script setup>
+import { ref, computed } from "vue";
+import { useReservas } from "@/composables/reservas";
+
+const { useGetReservasPub, reservasPub, useGetHabitaciones, habitaciones } =
+  useReservas();
+
+onBeforeMount(() => {
+  useGetReservasPub();
+  useGetHabitaciones();
+  mes();
+});
+
+// CALCULAR DIAS EN EL MES
+function daysInMonth(month, year) {
+  return new Date(year, month, 0).getDate();
+}
+const dias = computed(() => {
+  return daysInMonth(tablames.value, tablaaño.value);
+});
+
+const mes = () => {
+  let ahora = new Date();
+  let obtenerMes = ahora.getMonth();
+  let obtenerAño = ahora.getFullYear();
+  tablames.value = obtenerMes + 1;
+  tablaaño.value = obtenerAño;
+};
+
+const hotel_id = ref(1);
+const tablames = ref();
+const tablaaño = ref();
+
+function getClass(dia, habitacion) {
+  if (!reservasPub.value) return "";
+  var fechaDesde = null;
+  var fechaHasta = null;
+  const fechaDia = new Date(Date.UTC(tablaaño.value, tablames.value - 1, dia)); // Meses en JavaScript son base 0 (enero = 0, febrero = 1, ...)
+  const reserva = reservasPub.value.filter((reserva) => {
+    fechaDesde = new Date(reserva.desde);
+    fechaHasta = new Date(reserva.hasta);
+
+    return (
+      fechaDia >= fechaDesde &&
+      fechaDia <= fechaHasta &&
+      reserva.habitacion_id === habitacion
+    );
+  });
+
+  if (reserva.length === 0) {
+    return "";
+  } else if (reserva.length === 1) {
+    if (reserva) {
+      if (fechaDia.getTime() === new Date(reserva[0].desde).getTime()) {
+        return "primer-dia";
+      }
+      if (fechaDia.getTime() === new Date(reserva[0].hasta).getTime()) {
+        return "ultimo-dia";
+      }
+      return "bg-red-400 fade-in";
+    }
+    return "";
+  } else {
+    if (reserva.length === 2) {
+      return "dia-compartido";
+    }
+  }
+}
+</script>
