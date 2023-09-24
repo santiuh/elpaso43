@@ -5,6 +5,7 @@
 select {
   box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
   min-height: 2rem !important;
+
 }
 input {
   box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
@@ -109,6 +110,18 @@ input {
 .fade-in {
   -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+
+.dia-compartido {
+  background: rgb(255, 40, 40);
+  background: linear-gradient(
+    140deg,
+    rgba(255, 40, 40, 1) 40%,
+    rgba(255, 255, 255, 1) 48%,
+    rgba(255, 255, 255, 1) 52%,
+    rgba(255, 0, 0, 1) 60%
+  );
 }
 
 .scale-in-center {
